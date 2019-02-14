@@ -1,1 +1,5 @@
+# ignore ipython checkpoints
+.ipynb_checkpoints
+
+# ignore outputs
 **/out/*
