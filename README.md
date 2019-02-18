@@ -1,3 +1,14 @@
+## Workflow
+
+### Exécution ponctuelle
+
+- git -> papermill -> [s3, commuter]
+
+### Exécutions cycliques
+
+- `./dags/` contient la description des graphes d'exécution qui seront fourni à une instance [airflow](https://airflow.apache.org)
+- accès à l'instance airflow avec un tunnel ssh
+
 ## Bonnes pratiques
 
 ### Synchroniser les notebooks sans leurs sorties
