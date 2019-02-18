@@ -3,3 +3,5 @@
 
 # ignore outputs
 **/out/*
+
+__pycache__/
