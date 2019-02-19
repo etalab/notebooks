@@ -25,3 +25,12 @@ $ nbstripout --install
 ```
 $ pip uninstall enum34
 ```
+
+### Diff lisibles
+
+https://nbdime.readthedocs.io
+
+```
+$ pip install nbdime
+$ nbdime config-git --enable
+```
