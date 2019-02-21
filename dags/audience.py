@@ -26,7 +26,7 @@ def fetch_matomo(**kwargs):
     year = kwargs['execution_date'].year
     
     pm.execute_notebook(
-        '/home/tk/etalab/notebooks/data.gouv.fr/audience/year-days.ipynb',
+        '../data.gouv.fr/audience/year-days.ipynb',
         '/home/tk/s3/notebooks/auto/audience/{}.ipynb'.format(year),
         parameters = { "year": year }
     )
