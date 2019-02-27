@@ -1,9 +1,13 @@
 from airflow import DAG
+from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
 
 from datetime import datetime, timedelta
 
 import papermill as pm
+
+notebooks =  Variable.get('notebooks')
+buckets = Variable.get('buckets')
 
 default_args = {
     'owner': 'airflow',
@@ -28,32 +32,32 @@ dag = DAG('IRVE',
 
 def fetch_list():
     pm.execute_notebook(
-        '/home/tk/etalab/notebooks/irve/liste.ipynb',
-        '/home/tk/s3/notebooks/auto/irve/liste.ipynb'
+        '{}/irve/liste.ipynb'.format(notebooks),
+        '{}/notebooks/auto/irve/liste.ipynb'.format(buckets)
     )
 
 def download():
     pm.execute_notebook(
-        '/home/tk/etalab/notebooks/irve/download.ipynb',
-        '/home/tk/s3/notebooks/auto/irve/download.ipynb'
+        '{}/irve/download.ipynb'.format(notebooks),
+        '{}/notebooks/auto/irve/download.ipynb'.format(buckets)
     )
 
 def consolidation():
     pm.execute_notebook(
-        '/home/tk/etalab/notebooks/irve/consolidation.ipynb',
-        '/home/tk/s3/notebooks/auto/irve/consolidation.ipynb'
+        '{}/irve/consolidation.ipynb'.format(notebooks),
+        '{}/notebooks/auto/irve/consolidation.ipynb'.format(buckets)
     )
 
 def dgfr():
     pm.execute_notebook(
-        '/home/tk/etalab/notebooks/irve/dgfr.update.ipynb',
-        '/home/tk/s3/notebooks/auto/irve/dgfr.update.ipynb'
+        '{}/irve/dgfr.update.ipynb'.format(notebooks),
+        '{}/notebooks/auto/irve/dgfr.update.ipynb'.format(buckets)
     )
 
 def s3():
     pm.execute_notebook(
-        '/home/tk/etalab/notebooks/irve/s3.push.ipynb',
-        '/home/tk/s3/notebooks/auto/irve/s3.push.ipynb'
+        '{}/irve/s3.push.ipynb'.format(notebooks),
+        '{}/notebooks/auto/irve/s3.push.ipynb'.format(buckets)
     )
 t1 = PythonOperator(
     task_id='list',

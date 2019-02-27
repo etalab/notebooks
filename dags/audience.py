@@ -1,8 +1,12 @@
 from airflow import DAG
+from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
 
 import papermill as pm
+
+notebooks =  Variable.get('notebooks')
+buckets = Variable.get('buckets')
 
 default_args = {
     'owner': 'airflow',
@@ -24,20 +28,20 @@ dag = DAG('audience', default_args=default_args, schedule_interval="@yearly")
 def fetch_matomo(**kwargs):
 
     year = kwargs['execution_date'].year
-    
+
     pm.execute_notebook(
-        '../data.gouv.fr/audience/year-days.ipynb',
-        '/home/tk/s3/notebooks/auto/audience/{}.ipynb'.format(year),
+        '{}/data.gouv.fr/audience/year-days.ipynb'.format(notebooks),
+        '{}/notebooks/auto/audience/{}.ipynb'.format(buckets, year),
         parameters = { "year": year }
     )
 
 def update_datagouvfr(ds, **kwargs):
 
     year = kwargs['execution_date'].year
-    
     pm.execute_notebook(
-        '/home/tk/etalab/notebooks/data.gouv.fr/audience/dgfr.update.ipynb',
-        '/home/tk/s3/notebooks/auto/audience/dgfr.update-{}.ipynb'.format(year),
+
+        '{}/data.gouv.fr/audience/dgfr.update.ipynb'.format(notebooks),
+        '{}/notebooks/auto/audience/dgfr.update-{}.ipynb'.format(buckets, year),
         parameters = { "year": year }
     )
 
@@ -52,7 +56,7 @@ store = PythonOperator(
     task_id="update_datagouvfr",
     provide_context=True,
     python_callable=update_datagouvfr,
-    dag=dag    
+    dag=dag
 )
 
 fetch >> store
