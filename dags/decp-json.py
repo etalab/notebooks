@@ -7,6 +7,8 @@ from datetime import datetime, timedelta
 import papermill as pm
 
 notebooks =  Variable.get('notebooks')
+buckets = Variable.get('buckets')
+
 token =  Variable.get('token_etalab')
 prod = True
 
