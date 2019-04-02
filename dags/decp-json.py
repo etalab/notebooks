@@ -42,7 +42,8 @@ def sync():
     pm.execute_notebook(
         '{}/decp-json/decp-json.ipynb'.format(notebooks),
         '{}/notebooks/auto/decp-json/decp-json.ipynb'.format(buckets),
-        parameters = { "PROD": prod }
+        parameters = { "PROD": prod },
+        cwd='{}/decp-json/'.format(notebooks)
     )
 
 t0 = PythonOperator(
