@@ -30,7 +30,7 @@ default_args = {
 dag = DAG('decp-json',
     default_args=default_args,
     catchup=False,
-    schedule_interval=None
+    schedule_interval="@daily"
 )
 
 def create_token():
