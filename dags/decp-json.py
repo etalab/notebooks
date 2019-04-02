@@ -33,7 +33,7 @@ dag = DAG('decp-json',
     schedule_interval=None
 )
 
-def token():
+def create_token():
     f = open('{}/decp-json/datagouvfr-token.txt'.format(notebooks), "w+")
     f.write(token)
     f.close()
@@ -46,7 +46,7 @@ def sync():
     )
 
 t0 = PythonOperator(
-    task_id='token',
+    task_id='create_token',
     python_callable=create_token,
     dag=dag
 )
