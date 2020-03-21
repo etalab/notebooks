@@ -4,4 +4,6 @@
 # ignore outputs
 **/out/*
 
+perso/
+
 __pycache__/
