@@ -7,3 +7,5 @@
 perso/
 
 __pycache__/
+
+data.gouv.fr/audience/*-days.csv
